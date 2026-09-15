@@ -89,7 +89,6 @@
 
         /* ================= KATEGORIEN & STARTSEITE ================= */
         .home-banner {
-            /* Hintergrundbild ist wieder hier drin! */
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('img/hero-bg.jpg');
             background-size: cover; background-position: center;
             color: white; border-radius: 20px; padding: 25px; margin-bottom: 30px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 20px rgba(74, 107, 56, 0.2);
@@ -124,6 +123,21 @@
         .product-info p { font-size: 12px; color: var(--text-light); margin-bottom: 12px;}
         .price-row { display: flex; justify-content: space-between; align-items: center; padding: 0 12px; }
         .add-btn { background: var(--primary); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center; }
+
+        /* ================= FILTER CHIPS (Für Rezepte) ================= */
+        .filter-chips { display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 5px; -ms-overflow-style: none; scrollbar-width: none; }
+        .filter-chips::-webkit-scrollbar { display: none; }
+        .chip { background: var(--card-bg); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--text-light); box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .chip.active { background: var(--primary); color: white; }
+
+        /* ================= REZEPTE ================= */
+        .recipe-card { background: var(--card-bg); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); position: relative; margin-bottom: 15px; }
+        .recipe-img { width: 100%; height: 180px; object-fit: cover; }
+        .recipe-time-badge { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.95); color: var(--text-main); font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 12px; display: flex; align-items: center; gap: 4px; }
+        .recipe-bookmark { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.95); width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--text-light); }
+        .recipe-info { padding: 15px; }
+        .recipe-info h3 { font-size: 18px; margin-bottom: 6px; }
+        .recipe-info p { font-size: 13px; color: var(--text-light); }
 
         /* ================= LISTEN & PROFIL ================= */
         .list-item { background: var(--card-bg); padding: 15px; border-radius: 15px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
@@ -164,13 +178,8 @@
         }
         .toast-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         
-        /* Hof Details Info Box */
-        .farm-detail-box {
-            background: var(--card-bg); padding: 20px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 20px;
-        }
-        .farm-detail-row {
-            display: flex; gap: 10px; margin-bottom: 12px; align-items: center; font-size: 15px;
-        }
+        .farm-detail-box { background: var(--card-bg); padding: 20px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 20px; }
+        .farm-detail-row { display: flex; gap: 10px; margin-bottom: 12px; align-items: center; font-size: 15px; }
     </style>
 </head>
 <body>
@@ -265,9 +274,8 @@
                 <span id="dynamic-category-title">Kategorie</span>
             </div>
             
-            <!-- Hier generiert JS die passenden Produkte rein -->
             <div id="product-grid-container" class="product-grid">
-                <!-- Wird dynamisch gefüllt -->
+                <!-- Wird durch JavaScript gefüllt -->
             </div>
         </div>
 
@@ -318,7 +326,60 @@
             <p style="text-align: center; font-size: 12px; color: var(--text-light); margin-top: 15px;">Zeigt Bauernhöfe und Abholstationen in Karlsruhe.</p>
         </div>
 
-        <!-- ================= 6. WARENKORB SEITE ================= -->
+        <!-- ================= 6. NEU: REZEPTE SEITE ================= -->
+        <div id="screen-recipes" class="screen">
+            <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Rezepte
+            </div>
+            
+            <div class="search-bar">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Nach Rezepten oder Zutaten suchen...
+            </div>
+
+            <div class="filter-chips">
+                <div class="chip active">Alle</div>
+                <div class="chip">Schnell & Einfach</div>
+                <div class="chip">Saisonal</div>
+                <div class="chip">Vegetarisch</div>
+            </div>
+
+            <!-- Rezept 1 -->
+            <div class="recipe-card" onclick="alert('Hier öffnet sich bald das Rezept!')">
+                <div class="recipe-time-badge">⏱ 25 Min.</div>
+                <div class="recipe-bookmark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
+                <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=400&auto=format&fit=crop" class="recipe-img" alt="Pasta">
+                <div class="recipe-info">
+                    <h3>Zucchini-Pasta mit Zitrone</h3>
+                    <p>Leichtes Sommergericht mit frischen Zucchini vom Kräuterhof Bauer.</p>
+                </div>
+            </div>
+
+            <!-- Rezept 2 -->
+            <div class="recipe-card" onclick="alert('Hier öffnet sich bald das Rezept!')">
+                <div class="recipe-time-badge">⏱ 40 Min.</div>
+                <div class="recipe-bookmark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
+                <img src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=400&auto=format&fit=crop" class="recipe-img" alt="Suppe">
+                <div class="recipe-info">
+                    <h3>Karotten-Ingwer-Suppe</h3>
+                    <p>Wärmend und gesund. Perfekt für Bio-Karotten von Hofmanns Hof.</p>
+                </div>
+            </div>
+
+            <!-- Rezept 3 -->
+            <div class="recipe-card" onclick="alert('Hier öffnet sich bald das Rezept!')">
+                <div class="recipe-time-badge">⏱ 15 Min.</div>
+                <div class="recipe-bookmark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
+                <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=400&auto=format&fit=crop" class="recipe-img" alt="Frittata">
+                <div class="recipe-info">
+                    <h3>Bauern-Frittata</h3>
+                    <p>Ein schnelles Resteessen mit frischen Freilandeiern.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 7. WARENKORB SEITE ================= -->
         <div id="screen-cart" class="screen">
             <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -337,7 +398,7 @@
             <button class="checkout-btn" onclick="alert('Demo: Bestellung erfolgreich abgeschlossen!')">Jetzt bestellen</button>
         </div>
 
-        <!-- ================= 7. PROFIL SEITE ================= -->
+        <!-- ================= 8. PROFIL SEITE ================= -->
         <div id="screen-profile" class="screen">
             <div class="profile-header">
                 <div class="avatar">👨🏼‍🌾</div>
@@ -393,7 +454,8 @@
         <div class="nav-item" id="nav-map" onclick="navTo('screen-map', this.id)">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><br>Karte
         </div>
-        <div class="nav-item" onclick="alert('Rezepte-Seite kommt im nächsten Update!')">
+        <!-- NEU: Rezepte Button ist jetzt verlinkt -->
+        <div class="nav-item" id="nav-recipes" onclick="navTo('screen-recipes', this.id)">
             <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg><br>Rezepte
         </div>
         <div class="nav-item" id="nav-cart" onclick="navTo('screen-cart', this.id)">
@@ -415,12 +477,12 @@
             'Obst & Gemüse': [
                 { name: 'Bio Karotten', farm: 'Hofmanns Hof', price: 2.50, img: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=400&auto=format&fit=crop' },
                 { name: 'Cherrytomaten', farm: 'Biohof Schneider', price: 3.20, img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=400&auto=format&fit=crop' },
-                { name: 'Zucchini', farm: 'Kräuterhof Bauer', price: 2.00, img: 'https://images.unsplash.com/photo-1449339854873-750e6913301b?q=80&w=400&auto=format&fit=crop' } // NEUES Zucchini-Bild
+                { name: 'Zucchini', farm: 'Kräuterhof Bauer', price: 2.00, img: 'https://images.unsplash.com/photo-1449339854873-750e6913301b?q=80&w=400&auto=format&fit=crop' }
             ],
             'Milchprodukte': [
                 { name: 'Frische Weidemilch', farm: 'Biohof Schneider', price: 1.80, img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=400&auto=format&fit=crop' },
                 { name: 'Bauernkäse', farm: 'Hofmanns Hof', price: 4.50, img: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?q=80&w=400&auto=format&fit=crop' },
-                { name: 'Naturjoghurt', farm: 'Biohof Schneider', price: 1.20, img: 'https://images.unsplash.com/photo-1571212515416-fdf0daf20c54?q=80&w=400&auto=format&fit=crop' }
+                { name: 'Naturjoghurt', farm: 'Biohof Schneider', price: 1.20, img: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?q=80&w=400&auto=format&fit=crop' } /* Neues Joghurt Bild */
             ],
             'Fleisch & Eier': [
                 { name: 'Freilandeier (10er)', farm: 'Geflügelhof Huber', price: 3.50, img: 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?q=80&w=400&auto=format&fit=crop' },
@@ -430,17 +492,15 @@
             'Backwaren': [
                 { name: 'Holzofenbrot', farm: 'Bäckerei Müller', price: 4.20, img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop' },
                 { name: 'Dinkelbrötchen', farm: 'Bäckerei Müller', price: 0.80, img: 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?q=80&w=400&auto=format&fit=crop' },
-                { name: 'Hefezopf', farm: 'Bäckerei Müller', price: 5.00, img: 'https://images.unsplash.com/photo-1620921583091-8d2a632c0d89?q=80&w=400&auto=format&fit=crop' }
+                { name: 'Hefezopf', farm: 'Bäckerei Müller', price: 5.00, img: 'https://images.unsplash.com/photo-1598373182133-52452f7691ef?q=80&w=400&auto=format&fit=crop' } /* Neues Hefezopf Bild */
             ]
         };
 
-        // DATENBANK: Bauernhöfe Info
         const farmsDB = {
             'Hofmanns Hof': { img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400&auto=format&fit=crop', hours: 'Mo-Sa 08:00 - 18:00 Uhr', employees: '5 Mitarbeiter', distance: '5 km entfernt' },
             'Biohof Schneider': { img: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=400&auto=format&fit=crop', hours: 'Mo-Fr 09:00 - 17:00, Sa 08:00 - 13:00', employees: '8 Mitarbeiter', distance: '8 km entfernt' }
         };
 
-        // App starten (Splash Screen weg)
         function startApp() {
             const splash = document.getElementById('screen-splash');
             const home = document.getElementById('screen-home');
@@ -454,7 +514,6 @@
             nav.style.display = 'flex';
         }
 
-        // Navigation
         function navTo(screenId, navElementId = null) {
             document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
@@ -467,13 +526,11 @@
             window.scrollTo(0, 0);
         }
 
-        // Kategorie laden und Produkte generieren
         function openCategory(title) {
             document.getElementById('dynamic-category-title').innerText = title;
             const container = document.getElementById('product-grid-container');
-            container.innerHTML = ''; // Vorherige Produkte leeren
+            container.innerHTML = '';
 
-            // Produkte holen oder Fallback auf Obst & Gemüse
             const items = productsDB[title] || productsDB['Obst & Gemüse'];
             
             items.forEach(item => {
@@ -496,7 +553,6 @@
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         }
 
-        // Bauernhof Detailansicht öffnen
         function openFarm(farmName) {
             const farm = farmsDB[farmName];
             if(farm) {
@@ -511,7 +567,6 @@
             }
         }
 
-        // In den Warenkorb
         function addToCart(productName, price) {
             cartItems.push({ name: productName, price: price });
             
@@ -530,7 +585,6 @@
             }, 3000);
         }
 
-        // Warenkorb Liste anzeigen
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             const priceLabel = document.getElementById('cart-total-price');
