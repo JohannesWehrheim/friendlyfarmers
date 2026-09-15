@@ -6,7 +6,6 @@
     <title>friendly farmers</title>
     <link rel="manifest" href="manifest.json">
     
-    <!-- Sagt dem Browser: Lade das Hintergrundbild und Logo mit höchster Priorität! -->
     <link rel="preload" as="image" href="img/hero-bg.jpg">
     <link rel="preload" as="image" href="img/logo.png">
 
@@ -33,7 +32,6 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             overflow-x: hidden;
-            /* Verhindert Pull-to-Refresh auf iOS für echtes App-Feeling */
             overscroll-behavior-y: none; 
         }
 
@@ -53,7 +51,6 @@
             animation: fadeIn 0.3s ease;
         }
         
-        /* Das !important zwingt die Anzeige, falls JS hakt */
         .screen.active {
             display: block !important;
         }
@@ -63,56 +60,24 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ================= SPLASH SCREEN (Vollbild) ================= */
+        /* ================= SPLASH SCREEN ================= */
         #screen-splash {
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
-            max-width: 800px;
+            padding: 0; height: 100vh; width: 100vw; max-width: 800px;
             background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.6)), url('img/hero-bg.jpg');
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            color: white;
-            position: fixed;
-            top: 0; left: 0; 
-            z-index: 9999; /* Absolut in den Vordergrund */
+            background-size: cover; background-position: center; display: flex;
+            flex-direction: column; justify-content: space-between; color: white;
+            position: fixed; top: 0; left: 0; z-index: 9999;
         }
-        .splash-top {
-            padding: calc(40px + env(safe-area-inset-top)) 30px;
-            text-align: center;
-        }
-        .splash-logo-container {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            font-size: 28px; font-weight: 800; line-height: 1.1; margin-bottom: 20vh;
-        }
+        .splash-top { padding: calc(40px + env(safe-area-inset-top)) 30px; text-align: center; }
+        .splash-logo-container { display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 28px; font-weight: 800; line-height: 1.1; margin-bottom: 20vh; }
         .splash-logo-container img { height: 50px; filter: brightness(0) invert(1); }
-        
-        .splash-text {
-            font-size: 36px; font-family: "Georgia", serif; font-style: italic; line-height: 1.2;
-            text-align: left;
-        }
-        
-        .splash-bottom {
-            padding: 30px; 
-            padding-bottom: calc(40px + env(safe-area-inset-bottom));
-            position: relative;
-            z-index: 10000; /* Zwingt den Button-Bereich nach ganz vorne */
-        }
-        
-        /* Button repariert und absolut anklickbar gemacht */
+        .splash-text { font-size: 36px; font-family: "Georgia", serif; font-style: italic; line-height: 1.2; text-align: left; }
+        .splash-bottom { padding: 30px; padding-bottom: calc(40px + env(safe-area-inset-bottom)); position: relative; z-index: 10000; }
         .btn-large {
-            background: var(--primary); color: white; width: 100%; border: none;
-            padding: 18px; border-radius: 30px; font-size: 18px; font-weight: bold;
-            display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3); cursor: pointer;
-            pointer-events: auto;
+            background: var(--primary); color: white; width: 100%; border: none; padding: 18px; border-radius: 30px; font-size: 18px; font-weight: bold;
+            display: flex; justify-content: space-between; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3); cursor: pointer; pointer-events: auto;
         }
-        .btn-large:active {
-            transform: scale(0.98);
-        }
+        .btn-large:active { transform: scale(0.98); }
 
         /* ================= HEADER & SUCHE ================= */
         header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
@@ -120,40 +85,30 @@
         .logo-area img { height: 45px; object-fit: contain; }
         .header-icons { display: flex; gap: 15px; color: var(--primary); }
         .header-icons svg { width: 24px; height: 24px; }
-        
-        .search-bar {
-            background: var(--card-bg); padding: 14px 18px; border-radius: 25px;
-            display: flex; align-items: center; color: var(--text-light);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; font-size: 14px;
-        }
+        .search-bar { background: var(--card-bg); padding: 14px 18px; border-radius: 25px; display: flex; align-items: center; color: var(--text-light); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; font-size: 14px; }
 
         /* ================= KATEGORIEN & STARTSEITE ================= */
         .home-banner {
-            background: var(--primary); color: white; border-radius: 20px; padding: 25px;
-            margin-bottom: 30px; display: flex; flex-direction: column; justify-content: space-between;
-            box-shadow: 0 8px 20px rgba(74, 107, 56, 0.2);
+            /* Hintergrundbild ist wieder hier drin! */
+            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('img/hero-bg.jpg');
+            background-size: cover; background-position: center;
+            color: white; border-radius: 20px; padding: 25px; margin-bottom: 30px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 20px rgba(74, 107, 56, 0.2);
         }
         .home-banner h2 { font-size: 20px; font-weight: 700; line-height: 1.3; margin-bottom: 15px; }
-        .home-banner button {
-            align-self: flex-start; background: white; color: var(--primary); border: none;
-            padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer;
-        }
+        .home-banner button { align-self: flex-start; background: white; color: var(--primary); border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; }
 
         .categories { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 30px; }
         .category-item { text-align: center; font-size: 12px; cursor: pointer; font-weight: 500; }
-        .category-icon {
-            background: var(--card-bg); height: 65px; width: 65px; margin: 0 auto 8px auto; border-radius: 18px;
-            display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.04); font-size: 28px;
-        }
+        .category-icon { background: var(--card-bg); height: 65px; width: 65px; margin: 0 auto 8px auto; border-radius: 18px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.04); font-size: 28px; }
 
         /* ================= BAUERNHÖFE ================= */
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .section-header h3 { font-size: 18px; color: var(--text-main); }
         .section-header span { font-size: 13px; color: var(--primary); font-weight: 600; }
-        
         .farm-cards { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scroll-snap-type: x mandatory; -ms-overflow-style: none; scrollbar-width: none; }
         .farm-cards::-webkit-scrollbar { display: none; }
-        .farm-card { background: var(--card-bg); min-width: 220px; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; scroll-snap-align: start; }
+        .farm-card { background: var(--card-bg); min-width: 220px; border-radius: 18px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); overflow: hidden; scroll-snap-align: start; cursor: pointer; }
+        .farm-card:active { transform: scale(0.98); }
         .farm-img { width: 100%; height: 100px; object-fit: cover; }
         .farm-info { padding: 12px; }
         .farm-info h4 { font-size: 15px; margin-bottom: 4px; }
@@ -185,18 +140,15 @@
         /* ================= BOTTOM NAVIGATION ================= */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; right: 0; background: var(--card-bg);
-            display: flex; justify-content: space-around; padding: 15px 0 calc(15px + env(safe-area-inset-bottom)) 0;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 1000;
+            display: flex; justify-content: space-around; padding: 15px 0 calc(15px + env(safe-area-inset-bottom)) 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.06); z-index: 1000;
         }
         .nav-item { text-align: center; color: var(--text-light); font-size: 11px; font-weight: 500; cursor: pointer; position: relative; }
         .nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; fill: none; stroke: currentColor; stroke-width: 2; }
         .nav-item.active { color: var(--primary); }
         .nav-item.active svg { fill: var(--primary); stroke: var(--primary); }
-        
         .cart-badge {
             position: absolute; top: -5px; right: 20px; background: var(--badge-color); color: white;
-            font-size: 10px; font-weight: bold; height: 16px; min-width: 16px; border-radius: 8px;
-            display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;
+            font-size: 10px; font-weight: bold; height: 16px; min-width: 16px; border-radius: 8px; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s;
         }
         .cart-badge.show { opacity: 1; }
 
@@ -206,13 +158,19 @@
         /* ================= TOAST NOTIFICATION ================= */
         .toast-notification {
             position: fixed; bottom: calc(90px + env(safe-area-inset-bottom)); left: 50%;
-            transform: translateX(-50%) translateY(50px); opacity: 0;
-            background: var(--primary); color: white; padding: 12px 24px; border-radius: 30px;
-            font-size: 14px; font-weight: 600; box-shadow: 0 8px 20px rgba(74, 107, 56, 0.4);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+            transform: translateX(-50%) translateY(50px); opacity: 0; background: var(--primary); color: white; padding: 12px 24px; border-radius: 30px;
+            font-size: 14px; font-weight: 600; box-shadow: 0 8px 20px rgba(74, 107, 56, 0.4); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
             z-index: 99999; pointer-events: none; display: flex; align-items: center; gap: 10px; white-space: nowrap;
         }
         .toast-notification.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        
+        /* Hof Details Info Box */
+        .farm-detail-box {
+            background: var(--card-bg); padding: 20px; border-radius: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); margin-bottom: 20px;
+        }
+        .farm-detail-row {
+            display: flex; gap: 10px; margin-bottom: 12px; align-items: center; font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -230,7 +188,6 @@
             </div>
             
             <div class="splash-bottom">
-                <!-- Button Event Listener extrem robust gemacht -->
                 <button class="btn-large" id="start-btn" onclick="startApp()">
                     Los geht's
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
@@ -257,7 +214,7 @@
 
             <div class="home-banner">
                 <h2>Regional einkaufen.<br>Direkt vom Hof.<br>Einfach gut.</h2>
-                <button onclick="openCategory('Entdecken')">Jetzt entdecken</button>
+                <button onclick="openCategory('Obst & Gemüse')">Jetzt entdecken</button>
             </div>
 
             <div class="categories">
@@ -284,14 +241,14 @@
                 <span>Alle anzeigen &gt;</span>
             </div>
             <div class="farm-cards">
-                <div class="farm-card">
+                <div class="farm-card" onclick="openFarm('Hofmanns Hof')">
                     <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400&auto=format&fit=crop" class="farm-img" alt="Hof">
                     <div class="farm-info">
                         <h4>Hofmanns Hof</h4>
                         <p>📍 5 km • Frisches Gemüse</p>
                     </div>
                 </div>
-                <div class="farm-card">
+                <div class="farm-card" onclick="openFarm('Biohof Schneider')">
                     <img src="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=400&auto=format&fit=crop" class="farm-img" alt="Biohof">
                     <div class="farm-info">
                         <h4>Biohof Schneider</h4>
@@ -301,57 +258,49 @@
             </div>
         </div>
 
-
         <!-- ================= 3. PRODUKTE SEITE (Dynamisch) ================= -->
         <div id="screen-products" class="screen">
             <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                <span id="dynamic-category-title">Obst & Gemüse</span>
+                <span id="dynamic-category-title">Kategorie</span>
             </div>
             
-            <div class="product-grid">
-                <div class="product-card">
-                    <div class="regional-badge">🌱 Regional</div>
-                    <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=400&auto=format&fit=crop" class="product-img" alt="Karotten">
-                    <div class="product-info">
-                        <h3>Bio Karotten</h3>
-                        <p>Hofmanns Hof</p>
-                    </div>
-                    <div class="price-row">
-                        <strong>2,50 €</strong>
-                        <button class="add-btn" onclick="addToCart('Bio Karotten', 2.50)">+</button>
-                    </div>
-                </div>
-                
-                <div class="product-card">
-                    <div class="regional-badge">🌱 Regional</div>
-                    <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=400&auto=format&fit=crop" class="product-img" alt="Tomaten">
-                    <div class="product-info">
-                        <h3>Cherrytomaten</h3>
-                        <p>Biohof Schneider</p>
-                    </div>
-                    <div class="price-row">
-                        <strong>3,20 €</strong>
-                        <button class="add-btn" onclick="addToCart('Cherrytomaten', 3.20)">+</button>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="regional-badge">🌱 Regional</div>
-                    <img src="https://images.unsplash.com/photo-1518568740560-333139a27c72?q=80&w=400&auto=format&fit=crop" class="product-img" alt="Zucchini">
-                    <div class="product-info">
-                        <h3>Zucchini</h3>
-                        <p>Kräuterhof Bauer</p>
-                    </div>
-                    <div class="price-row">
-                        <strong>2,00 €</strong>
-                        <button class="add-btn" onclick="addToCart('Zucchini', 2.00)">+</button>
-                    </div>
-                </div>
+            <!-- Hier generiert JS die passenden Produkte rein -->
+            <div id="product-grid-container" class="product-grid">
+                <!-- Wird dynamisch gefüllt -->
             </div>
         </div>
 
-        <!-- ================= 4. KARTE SEITE (Karlsruhe) ================= -->
+        <!-- ================= 4. BAUERNHOF DETAIL SEITE ================= -->
+        <div id="screen-farm" class="screen">
+            <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span id="farm-title">Hofname</span>
+            </div>
+            
+            <img id="farm-image" src="" style="width: 100%; height: 220px; object-fit: cover; border-radius: 20px; margin-bottom: 20px;">
+            
+            <div class="farm-detail-box">
+                <h3 style="margin-bottom: 10px;">Über den Hof</h3>
+                <p style="color: var(--text-light); font-size: 14px; margin-bottom: 20px; line-height: 1.4;">Ein traditioneller Betrieb mit Fokus auf regionale, faire und nachhaltige Landwirtschaft direkt aus der Nachbarschaft.</p>
+                
+                <div class="farm-detail-row">
+                    <span>🕒</span> <strong>Öffnungszeiten:</strong> <span id="farm-hours"></span>
+                </div>
+                <div class="farm-detail-row">
+                    <span>👥</span> <strong>Mitarbeiter:</strong> <span id="farm-employees"></span>
+                </div>
+                <div class="farm-detail-row" style="margin-bottom: 0;">
+                    <span>📍</span> <strong>Entfernung:</strong> <span id="farm-distance"></span>
+                </div>
+            </div>
+            
+            <button class="btn-large" style="margin-top: 10px;" onclick="openCategory('Obst & Gemüse')">
+                Produkte ansehen
+            </button>
+        </div>
+
+        <!-- ================= 5. KARTE SEITE ================= -->
         <div id="screen-map" class="screen">
             <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -369,7 +318,7 @@
             <p style="text-align: center; font-size: 12px; color: var(--text-light); margin-top: 15px;">Zeigt Bauernhöfe und Abholstationen in Karlsruhe.</p>
         </div>
 
-        <!-- ================= 5. WARENKORB SEITE ================= -->
+        <!-- ================= 6. WARENKORB SEITE ================= -->
         <div id="screen-cart" class="screen">
             <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -388,7 +337,7 @@
             <button class="checkout-btn" onclick="alert('Demo: Bestellung erfolgreich abgeschlossen!')">Jetzt bestellen</button>
         </div>
 
-        <!-- ================= 6. PROFIL SEITE ================= -->
+        <!-- ================= 7. PROFIL SEITE ================= -->
         <div id="screen-profile" class="screen">
             <div class="profile-header">
                 <div class="avatar">👨🏼‍🌾</div>
@@ -461,22 +410,51 @@
         let cartItems = [];
         let toastTimeout;
 
-        // Macht das Ausblenden absolut sicher
+        // DATENBANK: Produkte pro Kategorie
+        const productsDB = {
+            'Obst & Gemüse': [
+                { name: 'Bio Karotten', farm: 'Hofmanns Hof', price: 2.50, img: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Cherrytomaten', farm: 'Biohof Schneider', price: 3.20, img: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Zucchini', farm: 'Kräuterhof Bauer', price: 2.00, img: 'https://images.unsplash.com/photo-1449339854873-750e6913301b?q=80&w=400&auto=format&fit=crop' } // NEUES Zucchini-Bild
+            ],
+            'Milchprodukte': [
+                { name: 'Frische Weidemilch', farm: 'Biohof Schneider', price: 1.80, img: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Bauernkäse', farm: 'Hofmanns Hof', price: 4.50, img: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Naturjoghurt', farm: 'Biohof Schneider', price: 1.20, img: 'https://images.unsplash.com/photo-1571212515416-fdf0daf20c54?q=80&w=400&auto=format&fit=crop' }
+            ],
+            'Fleisch & Eier': [
+                { name: 'Freilandeier (10er)', farm: 'Geflügelhof Huber', price: 3.50, img: 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Bio-Rinderhack', farm: 'Hofmanns Hof', price: 6.90, img: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Hähnchenbrust', farm: 'Geflügelhof Huber', price: 8.50, img: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?q=80&w=400&auto=format&fit=crop' }
+            ],
+            'Backwaren': [
+                { name: 'Holzofenbrot', farm: 'Bäckerei Müller', price: 4.20, img: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Dinkelbrötchen', farm: 'Bäckerei Müller', price: 0.80, img: 'https://images.unsplash.com/photo-1599707367072-cd6ada2bc375?q=80&w=400&auto=format&fit=crop' },
+                { name: 'Hefezopf', farm: 'Bäckerei Müller', price: 5.00, img: 'https://images.unsplash.com/photo-1620921583091-8d2a632c0d89?q=80&w=400&auto=format&fit=crop' }
+            ]
+        };
+
+        // DATENBANK: Bauernhöfe Info
+        const farmsDB = {
+            'Hofmanns Hof': { img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400&auto=format&fit=crop', hours: 'Mo-Sa 08:00 - 18:00 Uhr', employees: '5 Mitarbeiter', distance: '5 km entfernt' },
+            'Biohof Schneider': { img: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=400&auto=format&fit=crop', hours: 'Mo-Fr 09:00 - 17:00, Sa 08:00 - 13:00', employees: '8 Mitarbeiter', distance: '8 km entfernt' }
+        };
+
+        // App starten (Splash Screen weg)
         function startApp() {
             const splash = document.getElementById('screen-splash');
             const home = document.getElementById('screen-home');
             const nav = document.getElementById('main-nav');
             
-            // Hartes Entfernen des Splash Screens aus dem sichtbaren Bereich
             splash.style.display = 'none';
             splash.style.opacity = '0';
             splash.style.pointerEvents = 'none';
             
-            // Startseite und Menü aktivieren
             home.classList.add('active');
             nav.style.display = 'flex';
         }
 
+        // Navigation
         function navTo(screenId, navElementId = null) {
             document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
@@ -485,19 +463,55 @@
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 document.getElementById(navElementId).classList.add('active');
             }
-            
-            if (screenId === 'screen-cart') {
-                renderCart();
-            }
+            if (screenId === 'screen-cart') renderCart();
             window.scrollTo(0, 0);
         }
 
+        // Kategorie laden und Produkte generieren
         function openCategory(title) {
             document.getElementById('dynamic-category-title').innerText = title;
+            const container = document.getElementById('product-grid-container');
+            container.innerHTML = ''; // Vorherige Produkte leeren
+
+            // Produkte holen oder Fallback auf Obst & Gemüse
+            const items = productsDB[title] || productsDB['Obst & Gemüse'];
+            
+            items.forEach(item => {
+                container.innerHTML += `
+                <div class="product-card">
+                    <div class="regional-badge">🌱 Regional</div>
+                    <img src="${item.img}" class="product-img" alt="${item.name}">
+                    <div class="product-info">
+                        <h3>${item.name}</h3>
+                        <p>${item.farm}</p>
+                    </div>
+                    <div class="price-row">
+                        <strong>${item.price.toFixed(2).replace('.', ',')} €</strong>
+                        <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">+</button>
+                    </div>
+                </div>`;
+            });
+
             navTo('screen-products');
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
         }
 
+        // Bauernhof Detailansicht öffnen
+        function openFarm(farmName) {
+            const farm = farmsDB[farmName];
+            if(farm) {
+                document.getElementById('farm-title').innerText = farmName;
+                document.getElementById('farm-image').src = farm.img;
+                document.getElementById('farm-hours').innerText = farm.hours;
+                document.getElementById('farm-employees').innerText = farm.employees;
+                document.getElementById('farm-distance').innerText = farm.distance;
+                
+                navTo('screen-farm');
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            }
+        }
+
+        // In den Warenkorb
         function addToCart(productName, price) {
             cartItems.push({ name: productName, price: price });
             
@@ -509,7 +523,6 @@
             document.getElementById('toast-text').innerText = productName + " hinzugefügt";
             
             clearTimeout(toastTimeout);
-            
             toast.classList.add('show');
             
             toastTimeout = setTimeout(() => {
@@ -517,6 +530,7 @@
             }, 3000);
         }
 
+        // Warenkorb Liste anzeigen
         function renderCart() {
             const container = document.getElementById('cart-items-container');
             const priceLabel = document.getElementById('cart-total-price');
