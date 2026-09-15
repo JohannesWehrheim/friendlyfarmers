@@ -2,7 +2,6 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <!-- Wichtig für iPhone 15 Pro: viewport-fit=cover für die Dynamic Island -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
     <title>friendly farmer</title>
     <link rel="manifest" href="manifest.json">
@@ -10,10 +9,12 @@
         /* Farbpalette & Basis-Setup */
         :root {
             --primary: #4a6b38;
+            --primary-light: #5c8545;
             --bg-color: #f7f9f6;
             --card-bg: #ffffff;
             --text-main: #333333;
             --text-light: #777777;
+            --badge-color: #e74c3c;
         }
         
         * {
@@ -27,21 +28,18 @@
         body {
             background-color: var(--bg-color);
             color: var(--text-main);
-            /* Safe area padding für iPhone Notch/Dynamic Island */
             padding-top: env(safe-area-inset-top);
-            padding-bottom: calc(env(safe-area-inset-bottom) + 70px);
+            padding-bottom: calc(env(safe-area-inset-bottom) + 80px);
             overflow-x: hidden;
         }
 
-        /* App Container (streckt sich am Bildschirm, sieht aber auf Mobile bestens aus) */
         .app-container {
             width: 100%;
-            max-width: 800px; /* Begrenzung für Desktop, damit es nicht komplett zerbricht */
+            max-width: 800px;
             margin: 0 auto;
             position: relative;
         }
 
-        /* Screens (Seiten) */
         .screen {
             display: none;
             padding: 20px;
@@ -66,75 +64,111 @@
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 24px;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+        .logo-area img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+        .header-icons {
+            display: flex;
+            gap: 15px;
             color: var(--primary);
         }
-        .logo-area svg { width: 30px; height: 30px; fill: var(--primary); }
-        .header-icons svg { width: 24px; height: 24px; margin-left: 15px; }
+        .header-icons svg { width: 24px; height: 24px; }
 
         /* Suchleiste */
         .search-bar {
             background: var(--card-bg);
-            padding: 12px 15px;
-            border-radius: 20px;
+            padding: 14px 18px;
+            border-radius: 25px;
             display: flex;
             align-items: center;
             color: var(--text-light);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 25px;
+            font-size: 14px;
         }
 
-        /* Banner */
+        /* Hero Banner (Dein Bild) */
         .hero-banner {
-            background-image: url('https://images.unsplash.com/photo-1595853035070-59a39fe84ed3?q=80&w=800&auto=format&fit=crop');
+            /* Hier wird dein hochgeladenes Bild eingebunden */
+            background-image: url('img/hero-bg.jpg');
             background-size: cover;
             background-position: center;
-            height: 180px;
+            height: 200px;
             border-radius: 20px;
-            padding: 20px;
+            padding: 25px;
             color: white;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 20px rgba(74, 107, 56, 0.2);
         }
         .hero-banner::after {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)); z-index: 1;
+            background: linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%); z-index: 1;
         }
         .hero-banner h2, .hero-banner button { position: relative; z-index: 2; }
+        .hero-banner h2 { font-size: 22px; font-weight: 700; line-height: 1.3; }
         .hero-banner button {
             align-self: flex-start;
             background: var(--primary); color: white;
             border: none; padding: 10px 20px; border-radius: 20px;
             font-weight: bold; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Kategorien (Grid) */
+        /* Kategorien */
         .categories {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
+            gap: 10px;
+            margin-bottom: 30px;
         }
         .category-item {
-            text-align: center;
-            font-size: 12px;
-            cursor: pointer;
+            text-align: center; font-size: 12px; cursor: pointer; font-weight: 500;
         }
         .category-icon {
             background: var(--card-bg);
-            height: 60px; width: 60px;
+            height: 65px; width: 65px;
             margin: 0 auto 8px auto;
-            border-radius: 15px;
+            border-radius: 18px;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            font-size: 28px;
         }
+
+        /* Bauernhöfe in deiner Nähe (Neue Sektion für Startseite) */
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
+        }
+        .section-header h3 { font-size: 18px; color: var(--text-main); }
+        .section-header span { font-size: 13px; color: var(--primary); font-weight: 600; }
+        
+        .farm-cards {
+            display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px;
+            scroll-snap-type: x mandatory;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .farm-cards::-webkit-scrollbar { display: none; }
+        .farm-card {
+            background: var(--card-bg); min-width: 220px; border-radius: 18px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04); overflow: hidden;
+            scroll-snap-align: start;
+        }
+        .farm-img { width: 100%; height: 100px; object-fit: cover; }
+        .farm-info { padding: 12px; }
+        .farm-info h4 { font-size: 15px; margin-bottom: 4px; }
+        .farm-info p { font-size: 12px; color: var(--text-light); }
 
         /* Produkte Grid */
         .product-grid {
@@ -144,25 +178,31 @@
         }
         .product-card {
             background: var(--card-bg);
-            border-radius: 15px;
+            border-radius: 18px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
             padding-bottom: 15px;
+            position: relative;
         }
-        .product-img {
-            width: 100%; height: 120px; object-fit: cover;
+        .product-img { width: 100%; height: 140px; object-fit: cover; }
+        .regional-badge {
+            position: absolute; top: 10px; left: 10px;
+            background: rgba(255,255,255,0.9); color: var(--primary);
+            font-size: 10px; font-weight: bold; padding: 4px 8px; border-radius: 10px;
+            display: flex; align-items: center; gap: 4px;
         }
-        .product-info { padding: 10px; }
+        .product-info { padding: 12px; }
         .product-info h3 { font-size: 16px; margin-bottom: 4px; }
-        .product-info p { font-size: 12px; color: var(--text-light); margin-bottom: 10px;}
+        .product-info p { font-size: 12px; color: var(--text-light); margin-bottom: 12px;}
         .price-row {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 10px;
+            padding: 0 12px;
         }
         .add-btn {
             background: var(--primary); color: white;
-            border: none; width: 30px; height: 30px; border-radius: 50%;
-            font-size: 18px; cursor: pointer;
+            border: none; width: 32px; height: 32px; border-radius: 50%;
+            font-size: 20px; cursor: pointer; line-height: 1;
+            display: flex; justify-content: center; align-items: center;
         }
 
         /* Navigation unten */
@@ -172,19 +212,71 @@
             background: var(--card-bg);
             display: flex; justify-content: space-around;
             padding: 15px 0 calc(15px + env(safe-area-inset-bottom)) 0;
-            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
             z-index: 1000;
         }
         .nav-item {
             text-align: center; color: var(--text-light);
-            font-size: 10px; cursor: pointer;
+            font-size: 11px; font-weight: 500; cursor: pointer;
+            position: relative;
         }
-        .nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; fill: currentColor; }
+        .nav-item svg { width: 24px; height: 24px; margin-bottom: 4px; fill: none; stroke: currentColor; stroke-width: 2; }
         .nav-item.active { color: var(--primary); }
+        .nav-item.active svg { fill: var(--primary); stroke: var(--primary); }
+        
+        /* Badge für Warenkorb */
+        .cart-badge {
+            position: absolute; top: -5px; right: 20px;
+            background: var(--badge-color); color: white;
+            font-size: 10px; font-weight: bold; height: 16px; min-width: 16px;
+            border-radius: 8px; display: flex; justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .cart-badge.show { opacity: 1; }
 
         /* Zurück-Button Header (Produkte Seite) */
         .back-header {
-            display: flex; align-items: center; gap: 15px; margin-bottom: 20px; font-weight: bold; font-size: 20px; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;
+        }
+        .back-btn { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 20px; cursor: pointer; }
+        .filter-btn svg { width: 20px; height: 20px; color: var(--text-main); }
+
+        /* Filter Chips (Obst & Gemüse) */
+        .filter-chips {
+            display: flex; gap: 10px; overflow-x: auto; margin-bottom: 20px; padding-bottom: 5px;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .filter-chips::-webkit-scrollbar { display: none; }
+        .chip {
+            background: var(--card-bg); padding: 8px 16px; border-radius: 20px;
+            font-size: 13px; font-weight: 600; white-space: nowrap; color: var(--text-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .chip.active { background: var(--primary); color: white; }
+
+        /* In-App Toast Notification (Der elegante Apple-Alert-Ersatz) */
+        .toast-notification {
+            position: fixed;
+            bottom: calc(90px + env(safe-area-inset-bottom));
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(74, 107, 56, 0.4);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1001;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
@@ -196,20 +288,21 @@
         <div id="screen-home" class="screen active">
             <header>
                 <div class="logo-area">
-                    <!-- Simples Rüben-Logo als SVG -->
-                    <svg viewBox="0 0 24 24"><path d="M12,2C7.3,2,3.3,5.1,2.2,9.6c-0.1,0.5,0,1,0.3,1.4C3.8,12.8,7.6,14,12,14c4.4,0,8.2-1.2,9.5-3c0.3-0.4,0.4-0.9,0.3-1.4 C20.7,5.1,16.7,2,12,2z M12,15c-3.1,0-5.9,1.1-8.1,2.9c-0.5,0.4-0.6,1.2-0.2,1.7c1.3,1.6,4.5,4.4,8.3,4.4s7-2.8,8.3-4.4 c0.4-0.5,0.3-1.2-0.2-1.7C17.9,16.1,15.1,15,12,15z"/></svg>
-                    friendly<br>farmer
+                    <!-- Dein eigenes freigestelltes Logo -->
+                    <img src="img/logo.png" alt="Logo">
+                    <span>friendly<br>farmer</span>
                 </div>
                 <div class="header-icons">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                 </div>
             </header>
 
             <div class="search-bar">
-                <span style="margin-right: 10px;">🔍</span> Produkte, Bauernhöfe suchen...
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                Produkte, Bauernhöfe suchen...
             </div>
 
+            <!-- Dein eigenes Auberginen-Bild als Hintergrund -->
             <div class="hero-banner">
                 <h2>Regional einkaufen.<br>Direkt vom Hof.<br>Einfach gut.</h2>
                 <button onclick="navTo('screen-products')">Jetzt entdecken</button>
@@ -234,19 +327,55 @@
                     Backwaren
                 </div>
             </div>
+
+            <!-- Neue Sektion: Bauernhöfe in deiner Nähe -->
+            <div class="section-header">
+                <h3>Bauernhöfe in deiner Nähe</h3>
+                <span>Alle anzeigen &gt;</span>
+            </div>
+            <div class="farm-cards">
+                <div class="farm-card">
+                    <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400&auto=format&fit=crop" class="farm-img" alt="Hof">
+                    <div class="farm-info">
+                        <h4>Hofmanns Hof</h4>
+                        <p>📍 5 km • Frisches Gemüse</p>
+                    </div>
+                </div>
+                <div class="farm-card">
+                    <img src="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=400&auto=format&fit=crop" class="farm-img" alt="Biohof">
+                    <div class="farm-info">
+                        <h4>Biohof Schneider</h4>
+                        <p>📍 8 km • Milchprodukte</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
         <!-- ================= OBST & GEMÜSE SEITE ================= -->
         <div id="screen-products" class="screen">
-            <div class="back-header" onclick="navTo('screen-home')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                Obst & Gemüse
+            <div class="back-header">
+                <div class="back-btn" onclick="navTo('screen-home')">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Obst & Gemüse
+                </div>
+                <div class="filter-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                </div>
+            </div>
+
+            <div class="filter-chips">
+                <div class="chip active">Alle</div>
+                <div class="chip">Gemüse</div>
+                <div class="chip">Obst</div>
+                <div class="chip">Salate</div>
+                <div class="chip">Kräuter</div>
             </div>
             
             <div class="product-grid">
                 <!-- Produkt 1 -->
                 <div class="product-card">
+                    <div class="regional-badge">🌱 Regional</div>
                     <img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=400&auto=format&fit=crop" class="product-img" alt="Karotten">
                     <div class="product-info">
                         <h3>Bio Karotten</h3>
@@ -254,12 +383,14 @@
                     </div>
                     <div class="price-row">
                         <strong>2,50 €</strong>
-                        <button class="add-btn" onclick="alert('In den Warenkorb gelegt!')">+</button>
+                        <!-- Klick löst die neue In-App Notification aus -->
+                        <button class="add-btn" onclick="addToCart('Bio Karotten')">+</button>
                     </div>
                 </div>
                 
                 <!-- Produkt 2 -->
                 <div class="product-card">
+                    <div class="regional-badge">🌱 Regional</div>
                     <img src="https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=400&auto=format&fit=crop" class="product-img" alt="Tomaten">
                     <div class="product-info">
                         <h3>Cherrytomaten</h3>
@@ -267,7 +398,35 @@
                     </div>
                     <div class="price-row">
                         <strong>3,20 €</strong>
-                        <button class="add-btn" onclick="alert('In den Warenkorb gelegt!')">+</button>
+                        <button class="add-btn" onclick="addToCart('Cherrytomaten')">+</button>
+                    </div>
+                </div>
+
+                <!-- Produkt 3 -->
+                <div class="product-card">
+                    <div class="regional-badge">🌱 Regional</div>
+                    <img src="https://images.unsplash.com/photo-1518568740560-333139a27c72?q=80&w=400&auto=format&fit=crop" class="product-img" alt="Zucchini">
+                    <div class="product-info">
+                        <h3>Zucchini</h3>
+                        <p>Kräuterhof Bauer</p>
+                    </div>
+                    <div class="price-row">
+                        <strong>2,00 €</strong>
+                        <button class="add-btn" onclick="addToCart('Zucchini')">+</button>
+                    </div>
+                </div>
+
+                <!-- Produkt 4 -->
+                <div class="product-card">
+                    <div class="regional-badge">🌱 Regional</div>
+                    <img src="https://images.unsplash.com/photo-1560806887-1e4cd0b6fac6?q=80&w=400&auto=format&fit=crop" class="product-img" alt="Äpfel">
+                    <div class="product-info">
+                        <h3>Äpfel (Elstar)</h3>
+                        <p>Obsthof Meier</p>
+                    </div>
+                    <div class="price-row">
+                        <strong>3,50 €</strong>
+                        <button class="add-btn" onclick="addToCart('Äpfel')">+</button>
                     </div>
                 </div>
             </div>
@@ -275,28 +434,41 @@
 
     </div>
 
+    <!-- Elegante Toast Notification (statt Alert) -->
+    <div id="toast" class="toast-notification">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <span id="toast-text">In den Warenkorb gelegt</span>
+    </div>
+
     <!-- ================= BOTTOM NAVIGATION ================= -->
     <nav class="bottom-nav">
         <div class="nav-item active" onclick="navTo('screen-home', this)">
             <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg><br>Home
         </div>
-        <div class="nav-item" onclick="alert('Karte wird geöffnet...')">
+        <div class="nav-item">
             <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg><br>Karte
         </div>
-        <div class="nav-item" onclick="alert('Warenkorb öffnen...')">
-             <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><br>Warenkorb
+        <div class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg><br>Rezepte
+        </div>
+        <div class="nav-item">
+            <div id="cart-badge" class="cart-badge">0</div>
+            <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg><br>Warenkorb
+        </div>
+        <div class="nav-item">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><br>Profil
         </div>
     </nav>
 
-    <!-- Simples JS für das Wechseln der Screens -->
+    <!-- JS für Navigation und Warenkorb-Animation -->
     <script>
+        let cartCount = 0;
+        let toastTimeout;
+
         function navTo(screenId, navElement = null) {
-            // Alle Screens verstecken
             document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
-            // Ziel-Screen anzeigen
             document.getElementById(screenId).classList.add('active');
             
-            // Bottom-Nav Active State anpassen (simpel)
             if (navElement) {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 navElement.classList.add('active');
@@ -304,9 +476,28 @@
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 document.querySelectorAll('.nav-item')[0].classList.add('active');
             }
-            
-            // Auf der Seite nach ganz oben scrollen
             window.scrollTo(0, 0);
+        }
+
+        function addToCart(productName) {
+            // Zähler erhöhen und Badge aktualisieren
+            cartCount++;
+            const badge = document.getElementById('cart-badge');
+            badge.innerText = cartCount;
+            badge.classList.add('show');
+
+            // Elegante Toast-Notification anzeigen
+            const toast = document.getElementById('toast');
+            const toastText = document.getElementById('toast-text');
+            
+            toastText.innerText = productName + " hinzugefügt";
+            toast.classList.add('show');
+
+            // Toast nach 3 Sekunden wieder ausblenden
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
     </script>
 </body>
