@@ -102,7 +102,12 @@
         .logo-area img { height: 45px; object-fit: contain; }
         .header-icons { display: flex; gap: 15px; color: var(--primary); }
         .header-icons svg { width: 24px; height: 24px; }
-        .search-bar { background: var(--card-bg); padding: 14px 18px; border-radius: 25px; display: flex; align-items: center; color: var(--text-light); box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; font-size: 14px; }
+        
+        .search-bar { 
+            background: var(--card-bg); padding: 14px 18px; border-radius: 25px; display: flex; align-items: center; color: var(--text-light); 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; font-size: 14px; cursor: pointer; 
+        }
+        .search-bar:active { transform: scale(0.98); }
 
         /* ================= KATEGORIEN & STARTSEITE ================= */
         .home-banner {
@@ -234,14 +239,14 @@
                 </div>
             </header>
 
-            <div class="search-bar">
+            <div class="search-bar" onclick="openCategory('All Products')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 Search products or farms...
             </div>
 
             <div class="home-banner">
                 <h2>Shop local.<br>Direct from the farm.<br>Simply good.</h2>
-                <button onclick="openCategory('Fruits & Veggies')">Discover now</button>
+                <button onclick="openCategory('All Products')">Discover now</button>
             </div>
 
             <div class="categories">
@@ -321,7 +326,7 @@
                 </div>
             </div>
             
-            <button class="btn-large" style="margin-top: 10px;" onclick="openCategory('Fruits & Veggies')">
+            <button class="btn-large" style="margin-top: 10px;" onclick="openCategory('All Products')">
                 View products
             </button>
         </div>
@@ -333,7 +338,7 @@
                 Farms near you
             </div>
             
-            <div class="search-bar">
+            <div class="search-bar" onclick="openCategory('All Products')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 Search location...
             </div>
@@ -351,7 +356,7 @@
                 Recipes
             </div>
             
-            <div class="search-bar">
+            <div class="search-bar" onclick="openCategory('All Products')">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                 Search for recipes or ingredients...
             </div>
@@ -363,7 +368,6 @@
                 <div class="chip">Vegetarian</div>
             </div>
 
-            <!-- Klickbare Rezept-Karten -->
             <div class="recipe-card" onclick="openRecipe('Lemon Zucchini Pasta')">
                 <div class="recipe-time-badge">⏱ 25 Min.</div>
                 <div class="recipe-bookmark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
@@ -422,7 +426,6 @@
 
         <!-- ================= 7. WARENKORB SEITE ================= -->
         <div id="screen-cart" class="screen">
-            <!-- Header mit "Clear" Button -->
             <div class="back-header" style="justify-content: space-between; margin-bottom: 25px;">
                 <div onclick="navTo('screen-home', 'nav-home')" style="display: flex; align-items: center; gap: 10px;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -443,7 +446,7 @@
                 <span id="cart-total-price">€ 0.00</span>
             </div>
 
-            <button class="checkout-btn" onclick="alert('Demo: Order successfully placed!')">Order now</button>
+            <button class="checkout-btn" onclick="checkoutOrder()">Order now</button>
         </div>
 
         <!-- ================= 8. PROFIL SEITE ================= -->
@@ -519,7 +522,6 @@
         let cartItems = [];
         let toastTimeout;
 
-        // Produktdatenbank
         const productsDB = {
             'Fruits & Veggies': [
                 { name: 'Organic Carrots', farm: 'Hofmann\'s Farm', price: 2.50, img: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=400&auto=format&fit=crop' },
@@ -548,7 +550,6 @@
             'Schneider Organic Farm': { img: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=400&auto=format&fit=crop', hours: 'Mon-Fri 09:00 AM - 05:00 PM, Sat 08:00 AM - 01:00 PM', employees: '8 employees', distance: '8 km away' }
         };
 
-        // Rezeptdatenbank
         const recipesDB = {
             'Lemon Zucchini Pasta': {
                 img: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=400&auto=format&fit=crop',
@@ -602,7 +603,16 @@
             const container = document.getElementById('product-grid-container');
             container.innerHTML = '';
 
-            const items = productsDB[title] || productsDB['Fruits & Veggies'];
+            let items = [];
+            
+            // Wenn "All Products" angeklickt wurde, alle Listen mergen
+            if (title === 'All Products') {
+                Object.values(productsDB).forEach(categoryItems => {
+                    items = items.concat(categoryItems);
+                });
+            } else {
+                items = productsDB[title] || productsDB['Fruits & Veggies'];
+            }
             
             items.forEach(item => {
                 container.innerHTML += `
@@ -638,7 +648,6 @@
             }
         }
 
-        // Dynamisches Laden der Rezept-Details
         function openRecipe(recipeTitle) {
             const recipe = recipesDB[recipeTitle];
             if(recipe) {
@@ -677,7 +686,6 @@
             }, 3000);
         }
 
-        // Gesamten Warenkorb löschen
         function clearCart() {
             cartItems = [];
             const badge = document.getElementById('cart-badge');
@@ -712,6 +720,23 @@
 
             container.innerHTML = html;
             priceLabel.innerText = '€ ' + total.toFixed(2);
+        }
+
+        // Neue Checkout Logik mit Random Zeit
+        function checkoutOrder() {
+            if (cartItems.length === 0) {
+                alert("Your cart is empty. Add some fresh products first!");
+                return;
+            }
+            
+            // Random Zeit zwischen 5 und 120 berechnen
+            const randomTime = Math.floor(Math.random() * (120 - 5 + 1)) + 5;
+            
+            alert("Awesome! Your order is placed. 🚜\n\nYour driver is on the way and will arrive with your fresh food in approx. " + randomTime + " minutes.");
+            
+            // Warenkorb leeren und zur Startseite springen
+            clearCart();
+            navTo('screen-home', 'nav-home');
         }
     </script>
 </body>
