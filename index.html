@@ -148,7 +148,8 @@
         .chip.active { background: var(--primary); color: white; }
 
         /* ================= REZEPTE ================= */
-        .recipe-card { background: var(--card-bg); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); position: relative; margin-bottom: 15px; }
+        .recipe-card { background: var(--card-bg); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.04); position: relative; margin-bottom: 15px; cursor: pointer; }
+        .recipe-card:active { transform: scale(0.98); }
         .recipe-img { width: 100%; height: 180px; object-fit: cover; }
         .recipe-time-badge { position: absolute; top: 10px; left: 10px; background: rgba(255,255,255,0.95); color: var(--text-main); font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 12px; display: flex; align-items: center; gap: 4px; }
         .recipe-bookmark { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.95); width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--text-light); }
@@ -343,7 +344,7 @@
             <p style="text-align: center; font-size: 12px; color: var(--text-light); margin-top: 15px;">Shows farms and pickup stations in Karlsruhe.</p>
         </div>
 
-        <!-- ================= 6. REZEPTE SEITE ================= -->
+        <!-- ================= 6. REZEPTE ÜBERSICHT ================= -->
         <div id="screen-recipes" class="screen">
             <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
@@ -362,7 +363,8 @@
                 <div class="chip">Vegetarian</div>
             </div>
 
-            <div class="recipe-card" onclick="alert('The recipe will open here soon!')">
+            <!-- Klickbare Rezept-Karten -->
+            <div class="recipe-card" onclick="openRecipe('Lemon Zucchini Pasta')">
                 <div class="recipe-time-badge">⏱ 25 Min.</div>
                 <div class="recipe-bookmark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
                 <img src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=400&auto=format&fit=crop" class="recipe-img" alt="Pasta">
@@ -372,7 +374,7 @@
                 </div>
             </div>
 
-            <div class="recipe-card" onclick="alert('The recipe will open here soon!')">
+            <div class="recipe-card" onclick="openRecipe('Carrot Ginger Soup')">
                 <div class="recipe-time-badge">⏱ 40 Min.</div>
                 <div class="recipe-bookmark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
                 <img src="https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=400&auto=format&fit=crop" class="recipe-img" alt="Suppe">
@@ -382,7 +384,7 @@
                 </div>
             </div>
 
-            <div class="recipe-card" onclick="alert('The recipe will open here soon!')">
+            <div class="recipe-card" onclick="openRecipe('Farmer\'s Frittata')">
                 <div class="recipe-time-badge">⏱ 15 Min.</div>
                 <div class="recipe-bookmark"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></div>
                 <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=400&auto=format&fit=crop" class="recipe-img" alt="Frittata">
@@ -393,11 +395,43 @@
             </div>
         </div>
 
+        <!-- ================= 6B. REZEPT DETAILS (Dynamisch) ================= -->
+        <div id="screen-recipe-detail" class="screen">
+            <div class="back-header" onclick="navTo('screen-recipes', 'nav-recipes')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Back to Recipes
+            </div>
+            
+            <img id="recipe-detail-img" src="" style="width: 100%; height: 220px; object-fit: cover; border-radius: 20px; margin-bottom: 20px;">
+            
+            <div class="farm-detail-box">
+                <h2 id="recipe-detail-title" style="margin-bottom: 5px; font-size: 22px;">Recipe Title</h2>
+                <p id="recipe-detail-desc" style="color: var(--text-light); font-size: 14px; margin-bottom: 20px; line-height: 1.4;">Description</p>
+                
+                <h3 style="margin-bottom: 10px; font-size: 16px;">Ingredients</h3>
+                <ul id="recipe-detail-ingredients" style="margin: 0 0 20px 20px; color: var(--text-main); font-size: 14px; line-height: 1.6;">
+                    <!-- Wird dynamisch gefüllt -->
+                </ul>
+                
+                <h3 style="margin-bottom: 10px; font-size: 16px;">Instructions</h3>
+                <p id="recipe-detail-steps" style="color: var(--text-main); font-size: 14px; line-height: 1.6;">
+                    <!-- Wird dynamisch gefüllt -->
+                </p>
+            </div>
+        </div>
+
         <!-- ================= 7. WARENKORB SEITE ================= -->
         <div id="screen-cart" class="screen">
-            <div class="back-header" onclick="navTo('screen-home', 'nav-home')">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                Cart
+            <!-- Header mit "Clear" Button -->
+            <div class="back-header" style="justify-content: space-between; margin-bottom: 25px;">
+                <div onclick="navTo('screen-home', 'nav-home')" style="display: flex; align-items: center; gap: 10px;">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Cart
+                </div>
+                <div onclick="clearCart()" style="color: var(--badge-color); font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 5px; touch-action: manipulation;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    Clear
+                </div>
             </div>
 
             <div id="cart-items-container">
@@ -485,6 +519,7 @@
         let cartItems = [];
         let toastTimeout;
 
+        // Produktdatenbank
         const productsDB = {
             'Fruits & Veggies': [
                 { name: 'Organic Carrots', farm: 'Hofmann\'s Farm', price: 2.50, img: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=400&auto=format&fit=crop' },
@@ -511,6 +546,28 @@
         const farmsDB = {
             'Hofmann\'s Farm': { img: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=400&auto=format&fit=crop', hours: 'Mon-Sat 08:00 AM - 06:00 PM', employees: '5 employees', distance: '5 km away' },
             'Schneider Organic Farm': { img: 'https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=400&auto=format&fit=crop', hours: 'Mon-Fri 09:00 AM - 05:00 PM, Sat 08:00 AM - 01:00 PM', employees: '8 employees', distance: '8 km away' }
+        };
+
+        // Rezeptdatenbank
+        const recipesDB = {
+            'Lemon Zucchini Pasta': {
+                img: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?q=80&w=400&auto=format&fit=crop',
+                desc: 'Light summer dish with fresh zucchini from Bauer Herb Farm.',
+                ingredients: ['250g Pasta', '2 medium Zucchinis', '1 Lemon (zest and juice)', '2 tbsp Olive oil', 'Fresh Parmesan'],
+                steps: '1. Cook the pasta in salted water until al dente.<br>2. Slice the zucchini and pan-fry in olive oil until golden.<br>3. Add lemon juice, zest, and pasta to the pan. Toss well.<br>4. Serve warm and top with freshly grated parmesan.'
+            },
+            'Carrot Ginger Soup': {
+                img: 'https://images.unsplash.com/photo-1547592180-85f173990554?q=80&w=400&auto=format&fit=crop',
+                desc: 'Warming and healthy. Perfect for organic carrots from Hofmann\'s Farm.',
+                ingredients: ['500g Carrots', '1 Onion', '3cm Fresh Ginger', '800ml Vegetable broth', 'Splash of Cream'],
+                steps: '1. Roughly chop onions, carrots, and ginger.<br>2. Sauté everything in a pot with some oil.<br>3. Pour in the broth and simmer for 20 minutes.<br>4. Blend until smooth, season with salt and pepper, and finish with cream.'
+            },
+            'Farmer\'s Frittata': {
+                img: 'https://images.unsplash.com/photo-1482049016688-2d3e1b311543?q=80&w=400&auto=format&fit=crop',
+                desc: 'A quick leftovers dish with fresh free-range eggs.',
+                ingredients: ['6 Free-range Eggs', 'Leftover veggies (potatoes, peppers)', '1 small Onion', '50g Grated Cheese', 'Fresh Herbs'],
+                steps: '1. Whisk eggs in a bowl and stir in cheese and herbs.<br>2. Pan-fry the veggies and onion until soft.<br>3. Pour the egg mixture over the veggies.<br>4. Cook on low heat until set. Serve directly from the pan!'
+            }
         };
 
         function startApp(e) {
@@ -581,6 +638,27 @@
             }
         }
 
+        // Dynamisches Laden der Rezept-Details
+        function openRecipe(recipeTitle) {
+            const recipe = recipesDB[recipeTitle];
+            if(recipe) {
+                document.getElementById('recipe-detail-title').innerText = recipeTitle;
+                document.getElementById('recipe-detail-desc').innerText = recipe.desc;
+                document.getElementById('recipe-detail-img').src = recipe.img;
+                
+                const ingList = document.getElementById('recipe-detail-ingredients');
+                ingList.innerHTML = '';
+                recipe.ingredients.forEach(ing => {
+                    ingList.innerHTML += `<li>${ing}</li>`;
+                });
+                
+                document.getElementById('recipe-detail-steps').innerHTML = recipe.steps;
+                
+                navTo('screen-recipe-detail');
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            }
+        }
+
         function addToCart(productName, price) {
             cartItems.push({ name: productName, price: price });
             
@@ -597,6 +675,15 @@
             toastTimeout = setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
+        }
+
+        // Gesamten Warenkorb löschen
+        function clearCart() {
+            cartItems = [];
+            const badge = document.getElementById('cart-badge');
+            badge.innerText = '0';
+            badge.classList.remove('show');
+            renderCart();
         }
 
         function renderCart() {
